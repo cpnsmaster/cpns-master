@@ -8,6 +8,8 @@ import NotFoundPage from '../pages/NotFoundPage'
 import DashboardPage from '../pages/DashboardPage'
 import ProtectedRoute from '../components/auth/ProtectedRoute'
 
+import { AppLayout } from '../components/layout/AppLayout'
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -18,8 +20,13 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        path: '/dashboard',
-        element: <DashboardPage />,
+        element: <AppLayout />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <DashboardPage />,
+          },
+        ],
       },
     ],
   },

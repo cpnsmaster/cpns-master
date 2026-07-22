@@ -9,92 +9,12 @@ import {
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
-
-import { useMyProfile } from '../hooks/useMyProfile'
-
 function DashboardPage() {
-    const navigate = useNavigate()
-
-    const {
-        user,
-        logout,
-    } = useAuth()
-
-    const {
-        data: profile,
-        isLoading: isProfileLoading,
-    } = useMyProfile()
-
-
-    async function handleLogout() {
-        try {
-            await logout()
-
-            navigate('/login')
-        } catch (error) {
-            console.error(
-                'Logout failed:',
-                error,
-            )
-        }
-    }
-
     return (
-        <main className="min-h-screen bg-neutral-950 text-white">
-            {/* Header */}
-            <header className="border-b border-neutral-800">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-                    <div>
-                        <p className="text-sm text-neutral-400">
-                            Selamat datang kembali,{' '}
-                            {profile?.full_name?.split(' ')[0] ?? 'User'} 👋
-                        </p>
-
-                        <h1 className="mt-1 text-xl font-bold">
-                            Dashboard CPNS Master
-                        </h1>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <div className="hidden text-right sm:block">
-                            <p className="text-sm font-medium text-white">
-                                {isProfileLoading
-                                    ? 'Memuat...'
-                                    : profile?.full_name ?? 'User'}
-                            </p>
-
-                            <p className="text-xs text-neutral-500">
-                                {user?.email}
-                            </p>
-                        </div>
-
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 font-bold text-neutral-950">
-                            {(
-                                profile?.full_name ??
-                                user?.email ??
-                                'U'
-                            )
-                                .charAt(0)
-                                .toUpperCase()}
-                        </div>
-
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={handleLogout}
-                        >
-                            Logout
-                        </Button>
-
-                    </div>
-                </div>
-            </header>
-
-
+        <main className="min-h-screen text-white">
             {/* Content */}
             <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+
                 {/* Welcome */}
                 <section className="mb-10">
                     <h2 className="text-3xl font-black">
@@ -109,6 +29,7 @@ function DashboardPage() {
 
                 {/* Statistics */}
                 <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
                     <Card
                         variant="outlined"
                         className="p-6"
@@ -192,15 +113,18 @@ function DashboardPage() {
                             Belum ada simulasi
                         </p>
                     </Card>
+
                 </section>
 
                 {/* Main Cards */}
                 <section className="mt-10 grid gap-6 lg:grid-cols-3">
+
                     <Card
                         variant="outlined"
                         className="p-8 lg:col-span-2"
                     >
                         <div className="flex items-start gap-5">
+
                             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400">
                                 <BookOpen className="h-7 w-7" />
                             </div>
@@ -222,6 +146,7 @@ function DashboardPage() {
                                     Mulai Belajar
                                 </Button>
                             </div>
+
                         </div>
                     </Card>
 
@@ -230,6 +155,7 @@ function DashboardPage() {
                         className="p-8"
                     >
                         <div className="flex items-start gap-5">
+
                             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-yellow-400/10 text-yellow-400">
                                 <Brain className="h-7 w-7" />
                             </div>
@@ -251,9 +177,12 @@ function DashboardPage() {
                                     Latihan Sekarang
                                 </Button>
                             </div>
+
                         </div>
                     </Card>
+
                 </section>
+
             </div>
         </main>
     )
