@@ -7,8 +7,9 @@ import RegisterPage from '../pages/RegisterPage'
 import NotFoundPage from '../pages/NotFoundPage'
 import DashboardPage from '../pages/DashboardPage'
 import ProtectedRoute from '../components/auth/ProtectedRoute'
-
 import { AppLayout } from '../components/layout/AppLayout'
+// import UserManagementPage from '../pages/admin/UserManagementPage'
+import AdminUsersPage from '../pages/admin/AdminUserPage'
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,11 @@ export const router = createBrowserRouter([
             path: '/dashboard',
             element: <DashboardPage />,
           },
+
+          {
+            path: '/admin/users',
+            element: <AdminUsersPage />,
+        },
         ],
       },
     ],
