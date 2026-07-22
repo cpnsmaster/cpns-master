@@ -1,521 +1,603 @@
 # CPNS Master — Folder Structure & Architecture
 
-> Belajar lebih terarah. Latihan lebih cerdas. Lulus lebih siap.
-
-**Document Status:** Draft  
-**Version:** 1.0.0  
-**Last Updated:** 2026-07-20  
-**Product Name:** CPNS Master  
+**Version:** 2.0  
+**Last Updated:** 2026-07-22
 
 ---
 
 # 1. Architecture Overview
 
-CPNS Master menggunakan arsitektur frontend modern berbasis:
+CPNS Master menggunakan arsitektur frontend berbasis React + TypeScript.
+
+Teknologi utama:
 
 ```text
 React
-   ↓
-Vite
-   ↓
 TypeScript
-   ↓
+Vite
+React Router
 Tailwind CSS
-   ↓
+TanStack Query
 Supabase
-   ↓
-PostgreSQL
 ```
 
-Deployment:
+Arsitektur utama:
 
 ```text
-GitHub
-   ↓
-Vercel
-   ↓
-Production Application
+User
+    ↓
+React Application
+    ↓
+AuthContext
+    ↓
+Supabase Auth
+    ↓
+Profile
+    ↓
+Role & Status
+    ↓
+Route Guard
+    ↓
+Layout
+    ↓
+Feature
+    ↓
+Supabase Database
 ```
 
 ---
 
-# 2. Architecture Principles
-
-Arsitektur project mengikuti prinsip:
-
-1. Feature-oriented.
-2. Modular.
-3. Reusable.
-4. Type-safe.
-5. Easy to maintain.
-6. Secure by default.
-7. Mobile-first.
-8. Scalable.
-
----
-
-# 3. Recommended Project Structure
+# 2. Project Structure
 
 ```text
-cpns-master/
+src/
 │
-├── .github/
-│   └── workflows/
+├── app/
+│   ├── router.tsx
+│   ├── providers.tsx
+│   └── config.ts
 │
-├── docs/
-│   ├── 01-product-requirement-document.md
-│   ├── 02-ui-ux-design-system.md
-│   ├── 03-database-design.md
-│   ├── 04-folder-structure-and-architecture.md
-│   └── 05-component-library.md
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── logos/
 │
-├── public/
-│   ├── favicon.ico
-│   ├── logo.svg
-│   └── assets/
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx
+│   │   ├── Sidebar.tsx
+│   │   ├── MobileSidebar.tsx
+│   │   └── AppLayout.tsx
+│   │
+│   ├── ui/
+│   │   ├── Button.tsx
+│   │   ├── Card.tsx
+│   │   ├── Badge.tsx
+│   │   ├── Input.tsx
+│   │   ├── Modal.tsx
+│   │   ├── Table.tsx
+│   │   ├── Select.tsx
+│   │   └── Spinner.tsx
+│   │
+│   └── feedback/
+│       ├── EmptyState.tsx
+│       ├── ErrorState.tsx
+│       └── LoadingState.tsx
 │
-├── src/
-│   │
-│   ├── app/
-│   │   ├── App.tsx
-│   │   ├── router.tsx
-│   │   └── providers.tsx
-│   │
-│   ├── assets/
-│   │   ├── images/
-│   │   ├── icons/
-│   │   └── fonts/
-│   │
-│   ├── components/
-│   │   ├── ui/
-│   │   ├── layout/
-│   │   ├── feedback/
-│   │   └── data-display/
-│   │
-│   ├── features/
-│   │   ├── auth/
-│   │   ├── dashboard/
-│   │   ├── materials/
-│   │   ├── questions/
-│   │   ├── practice/
-│   │   ├── simulation/
-│   │   ├── bookmarks/
-│   │   ├── progress/
-│   │   └── admin/
-│   │
-│   ├── hooks/
-│   │
-│   ├── layouts/
-│   │
-│   ├── lib/
-│   │   ├── supabase.ts
-│   │   ├── query-client.ts
-│   │   └── constants.ts
-│   │
-│   ├── pages/
-│   │   ├── public/
-│   │   ├── learner/
-│   │   └── admin/
-│   │
-│   ├── services/
-│   │   ├── auth.service.ts
-│   │   ├── material.service.ts
-│   │   ├── question.service.ts
-│   │   ├── practice.service.ts
-│   │   └── exam.service.ts
-│   │
-│   ├── stores/
-│   │
-│   ├── types/
-│   │
-│   └── utils/
+├── contexts/
+│   └── AuthContext.tsx
 │
-├── supabase/
-│   ├── migrations/
-│   ├── seed/
-│   └── functions/
+├── features/
+│   │
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types/
+│   │
+│   ├── learning/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types/
+│   │
+│   ├── questions/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types/
+│   │
+│   ├── simulations/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types/
+│   │
+│   ├── admin/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── types/
+│   │
+│   └── super-admin/
+│       ├── components/
+│       ├── hooks/
+│       ├── services/
+│       └── types/
 │
-├── .env.example
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package.json
-├── postcss.config.js
-├── tailwind.config.ts
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+├── hooks/
+│   ├── useAuth.ts
+│   ├── useMyProfile.ts
+│   ├── useRole.ts
+│   └── usePermissions.ts
+│
+├── layouts/
+│   ├── AuthLayout.tsx
+│   ├── AppLayout.tsx
+│   └── AdminLayout.tsx
+│
+├── lib/
+│   ├── supabase.ts
+│   ├── queryClient.ts
+│   └── utils.ts
+│
+├── pages/
+│   ├── public/
+│   │   ├── HomePage.tsx
+│   │   ├── LoginPage.tsx
+│   │   ├── RegisterPage.tsx
+│   │   └── NotFoundPage.tsx
+│   │
+│   ├── user/
+│   │   ├── DashboardPage.tsx
+│   │   ├── LearningPage.tsx
+│   │   ├── PracticePage.tsx
+│   │   ├── SimulationPage.tsx
+│   │   ├── ProgressPage.tsx
+│   │   └── ProfilePage.tsx
+│   │
+│   ├── admin/
+│   │   ├── AdminDashboardPage.tsx
+│   │   ├── MaterialsPage.tsx
+│   │   ├── QuestionsPage.tsx
+│   │   ├── CategoriesPage.tsx
+│   │   └── ImportPage.tsx
+│   │
+│   └── super-admin/
+│       ├── SuperAdminDashboardPage.tsx
+│       ├── UsersPage.tsx
+│       ├── AdminsPage.tsx
+│       ├── AuditLogsPage.tsx
+│       └── SystemSettingsPage.tsx
+│
+├── routes/
+│   ├── ProtectedRoute.tsx
+│   ├── RoleRoute.tsx
+│   └── PublicRoute.tsx
+│
+├── services/
+│   ├── authService.ts
+│   ├── profileService.ts
+│   └── storageService.ts
+│
+├── stores/
+│   └── appStore.ts
+│
+├── types/
+│   ├── auth.ts
+│   ├── profile.ts
+│   ├── database.ts
+│   └── common.ts
+│
+├── utils/
+│   ├── constants.ts
+│   ├── formatters.ts
+│   └── validators.ts
+│
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ---
 
-# 4. src/app
+# 3. Application Layers
+
+CPNS Master menggunakan beberapa lapisan utama.
+
+```text
+Pages
+    ↓
+Features
+    ↓
+Hooks
+    ↓
+Services
+    ↓
+Supabase
+```
+
+Contoh:
+
+```text
+QuestionsPage
+    ↓
+useQuestions()
+    ↓
+questionService
+    ↓
+Supabase
+```
+
+---
+
+# 4. App Layer
+
+Folder:
+
+```text
+src/app/
+```
 
 Berisi konfigurasi utama aplikasi.
 
-## App.tsx
-
-Root component aplikasi.
-
-Responsibilities:
-
-- Render aplikasi.
-- Menyediakan global providers.
-- Menentukan root structure.
-
----
+```text
+app/
+├── router.tsx
+├── providers.tsx
+└── config.ts
+```
 
 ## router.tsx
 
-Menyimpan konfigurasi routing.
-
-Contoh:
+Mengatur:
 
 ```text
-/
-├── /
-├── /login
-├── /register
-├── /dashboard
-├── /materials
-├── /practice
-├── /simulation
-└── /admin
+Public Routes
+Protected Routes
+Admin Routes
+Super Admin Routes
 ```
-
----
 
 ## providers.tsx
 
-Menyediakan provider global.
+Mengatur provider:
+
+```text
+QueryClientProvider
+AuthProvider
+ThemeProvider
+```
+
+---
+
+# 5. Components Layer
+
+Folder:
+
+```text
+src/components/
+```
+
+Berisi komponen reusable.
 
 Contoh:
 
 ```text
-AuthProvider
-QueryClientProvider
-ThemeProvider
-ToastProvider
-```
-
----
-
-# 5. src/components
-
-Berisi komponen reusable yang dapat digunakan oleh berbagai feature.
-
-Komponen di folder ini tidak boleh bergantung pada business logic yang terlalu spesifik.
-
----
-
-## 5.1 components/ui
-
-Komponen dasar:
-
-```text
 Button
-Input
-Textarea
-Select
-Checkbox
-Radio
 Card
-Badge
 Modal
-Dropdown
-Tabs
-Tooltip
-```
-
----
-
-## 5.2 components/layout
-
-Komponen layout:
-
-```text
-Header
-Sidebar
-Footer
-PageContainer
-Section
-```
-
----
-
-## 5.3 components/feedback
-
-Komponen feedback:
-
-```text
-Alert
-Toast
-Spinner
-Skeleton
-EmptyState
-ErrorState
-```
-
----
-
-## 5.4 components/data-display
-
-Komponen display data:
-
-```text
 Table
-Pagination
-StatCard
-ProgressBar
-Avatar
+Input
+Badge
 ```
+
+Komponen di sini tidak boleh bergantung pada fitur bisnis tertentu.
+
+Contoh yang baik:
+
+```tsx
+<Button>
+    Simpan
+</Button>
+```
+
+Contoh yang sebaiknya tidak berada di shared component:
+
+```tsx
+<CreateQuestionButton />
+```
+
+Karena itu merupakan bagian dari feature Questions.
 
 ---
 
 # 6. Feature-Based Architecture
 
-Setiap fitur memiliki folder sendiri.
+Fitur yang kompleks dikelompokkan berdasarkan domain.
+
+```text
+features/
+├── auth/
+├── learning/
+├── questions/
+├── simulations/
+├── admin/
+└── super-admin/
+```
+
+Setiap feature dapat memiliki:
+
+```text
+components
+hooks
+services
+types
+```
 
 Contoh:
-
-```text
-features/materials/
-├── components/
-├── hooks/
-├── services/
-├── types.ts
-└── index.ts
-```
-
-Keuntungan:
-
-- Fitur terisolasi.
-- Mudah dikembangkan.
-- Mudah dihapus.
-- Mudah di-test.
-- Business logic lebih terorganisir.
-
----
-
-# 7. Feature: Auth
-
-```text
-features/auth/
-├── components/
-│   ├── LoginForm.tsx
-│   ├── RegisterForm.tsx
-│   └── ForgotPasswordForm.tsx
-│
-├── hooks/
-│   └── useAuth.ts
-│
-├── services/
-│   └── auth.service.ts
-│
-├── types.ts
-└── index.ts
-```
-
-Responsibilities:
-
-- Login.
-- Register.
-- Logout.
-- Password reset.
-- Session management.
-
----
-
-# 8. Feature: Materials
-
-```text
-features/materials/
-├── components/
-│   ├── MaterialCard.tsx
-│   ├── MaterialList.tsx
-│   ├── MaterialContent.tsx
-│   └── MaterialProgress.tsx
-│
-├── hooks/
-│   ├── useMaterials.ts
-│   └── useMaterialProgress.ts
-│
-├── services/
-│   └── material.service.ts
-│
-├── types.ts
-└── index.ts
-```
-
----
-
-# 9. Feature: Questions
 
 ```text
 features/questions/
 ├── components/
 │   ├── QuestionCard.tsx
-│   ├── QuestionOption.tsx
-│   ├── QuestionExplanation.tsx
-│   └── QuestionFilters.tsx
-│
-├── hooks/
-│   └── useQuestions.ts
-│
-├── services/
-│   └── question.service.ts
-│
-├── types.ts
-└── index.ts
-```
-
----
-
-# 10. Feature: Practice
-
-```text
-features/practice/
-├── components/
-│   ├── PracticeQuestion.tsx
-│   ├── PracticeResult.tsx
-│   └── PracticeSummary.tsx
-│
-├── hooks/
-│   └── usePracticeSession.ts
-│
-├── services/
-│   └── practice.service.ts
-│
-├── types.ts
-└── index.ts
-```
-
----
-
-# 11. Feature: Simulation
-
-```text
-features/simulation/
-├── components/
-│   ├── ExamTimer.tsx
-│   ├── QuestionNavigator.tsx
-│   ├── ExamQuestion.tsx
-│   ├── ExamSummary.tsx
-│   └── ExamResult.tsx
-│
-├── hooks/
-│   ├── useExamTimer.ts
-│   └── useExamSession.ts
-│
-├── services/
-│   └── exam.service.ts
-│
-├── types.ts
-└── index.ts
-```
-
----
-
-# 12. Feature: Admin
-
-Admin memiliki beberapa domain.
-
-```text
-features/admin/
-├── materials/
-├── questions/
-├── categories/
-├── exam-packages/
-├── users/
-├── imports/
-└── analytics/
-```
-
-Contoh:
-
-```text
-features/admin/questions/
-├── components/
 │   ├── QuestionForm.tsx
-│   ├── QuestionTable.tsx
-│   └── QuestionImport.tsx
+│   └── QuestionOptionEditor.tsx
 │
 ├── hooks/
+│   ├── useQuestions.ts
+│   └── useQuestion.ts
+│
 ├── services/
-├── types.ts
-└── index.ts
+│   └── questionService.ts
+│
+└── types/
+    └── question.ts
 ```
 
 ---
 
-# 13. Pages
+# 7. Authentication Architecture
 
-Pages berfungsi sebagai composition layer.
+```text
+Supabase Auth
+    ↓
+AuthContext
+    ↓
+useAuth()
+    ↓
+Application
+```
 
-Page tidak seharusnya memiliki business logic yang terlalu banyak.
+AuthContext bertanggung jawab terhadap:
+
+```text
+Current User
+Session
+Login
+Register
+Logout
+Auth Loading
+```
+
+Contoh:
+
+```tsx
+const {
+    user,
+    session,
+    isLoading,
+    login,
+    logout,
+} = useAuth()
+```
+
+---
+
+# 8. Authorization Architecture
+
+Authentication:
+
+```text
+Siapa user tersebut?
+```
+
+Authorization:
+
+```text
+Apa yang boleh dilakukan user tersebut?
+```
+
+Flow:
+
+```text
+User
+    ↓
+Authenticated
+    ↓
+Load Profile
+    ↓
+Check Status
+    ↓
+Check Role
+    ↓
+Check Permission
+    ↓
+Allow / Deny
+```
+
+---
+
+# 9. Route Architecture
+
+## Public Routes
+
+```text
+/
+├── /login
+├── /register
+└── /forgot-password
+```
+
+## User Routes
+
+```text
+/dashboard
+/learning
+/practice
+/simulation
+/progress
+/profile
+```
+
+## Admin Routes
+
+```text
+/admin
+/admin/materials
+/admin/questions
+/admin/categories
+/admin/import
+```
+
+## Super Admin Routes
+
+```text
+/super-admin
+/super-admin/users
+/super-admin/admins
+/super-admin/audit-logs
+/super-admin/settings
+```
+
+---
+
+# 10. Route Guard Architecture
+
+```text
+PublicRoute
+    ↓
+ProtectedRoute
+    ↓
+RoleRoute
+```
 
 Contoh:
 
 ```text
-pages/learner/DashboardPage.tsx
-```
-
-Page akan menggabungkan:
-
-```text
-Layout
-   ↓
-Feature Components
-   ↓
-Shared Components
-```
-
----
-
-# 14. Layouts
-
-Layout digunakan untuk struktur halaman.
-
-```text
-layouts/
-├── PublicLayout.tsx
-├── LearnerLayout.tsx
-├── AdminLayout.tsx
-└── AuthLayout.tsx
+Public Route
+    ↓
+Login
+    ↓
+Protected Route
+    ↓
+Role Route
+    ↓
+Page
 ```
 
 ---
 
-# 15. Services
+# 11. Layout Architecture
 
-Service layer bertanggung jawab terhadap komunikasi dengan Supabase.
+## Public Layout
+
+```text
+PublicLayout
+├── Navbar
+└── Content
+```
+
+## User Layout
+
+```text
+AppLayout
+├── Sidebar
+├── MobileSidebar
+├── Header
+└── Main Content
+```
+
+## Admin Layout
+
+```text
+AdminLayout
+├── Admin Sidebar
+├── Header
+└── Main Content
+```
+
+## Super Admin Layout
+
+```text
+SuperAdminLayout
+├── Super Admin Sidebar
+├── Header
+└── Main Content
+```
+
+---
+
+# 12. Sidebar Architecture
+
+Sidebar menu ditentukan berdasarkan role.
+
+```text
+User
+    ↓
+User Navigation
+```
+
+```text
+Admin
+    ↓
+User Navigation
+    +
+Admin Navigation
+```
+
+```text
+Super Admin
+    ↓
+User Navigation
+    +
+Admin Navigation
+    +
+Super Admin Navigation
+```
 
 Contoh:
 
-```typescript
-export const getMaterials = async () => {
-  const { data, error } = await supabase
-    .from("materials")
-    .select("*");
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
+```text
+Sidebar
+├── Dashboard
+├── Belajar
+├── Latihan Soal
+├── Simulasi CAT
+├── Progress
+│
+├── ADMIN
+│   ├── Materi
+│   ├── Bank Soal
+│   └── Kategori
+│
+└── SUPER ADMIN
+    ├── User Management
+    ├── Admin Management
+    ├── Audit Logs
+    └── System Settings
 ```
-
-Komponen tidak seharusnya langsung melakukan query Supabase secara berulang.
 
 ---
 
-# 16. Service Layer Rules
+# 13. Service Layer
 
-## Good
+Service bertanggung jawab terhadap komunikasi dengan Supabase.
+
+Contoh:
 
 ```text
-Component
+Page
     ↓
 Hook
     ↓
@@ -524,393 +606,60 @@ Service
 Supabase
 ```
 
-## Avoid
-
-```text
-Component
-    ↓
-Supabase Query
-```
-
-Service layer membuat kode lebih mudah dirawat.
-
----
-
-# 17. Hooks
-
-Hooks digunakan untuk:
-
-- Fetch data.
-- Mutation.
-- Auth state.
-- Form logic.
-- Timer.
-- Progress.
-
 Contoh:
 
-```text
-useAuth()
-useMaterials()
+```ts
 useQuestions()
-usePracticeSession()
-useExamTimer()
-useDebounce()
+    ↓
+questionService.getQuestions()
+    ↓
+supabase.from('questions')
 ```
+
+Service tidak boleh dipanggil langsung dari komponen UI jika operasi tersebut kompleks.
 
 ---
 
-# 18. State Management
+# 14. Hook Layer
 
-Tidak semua state harus disimpan secara global.
-
-## Local State
-
-Gunakan untuk:
-
-- Modal.
-- Input.
-- Toggle.
-- Tab.
-- UI state.
-
-## Server State
-
-Gunakan untuk:
-
-- Materials.
-- Questions.
-- User data.
-- Progress.
-
-## Global State
-
-Gunakan hanya jika diperlukan.
+Hook menghubungkan UI dengan data.
 
 Contoh:
 
-- Auth session.
-- Global UI preferences.
-- Active exam session.
-
----
-
-# 19. Recommended State Strategy
-
-```text
-Local UI State
-      ↓
-React useState
-
-Server State
-      ↓
-TanStack Query
-
-Global State
-      ↓
-Context / Lightweight Store
+```ts
+useQuestions()
+useQuestion()
+useCreateQuestion()
+useUpdateQuestion()
+useDeleteQuestion()
 ```
 
-Pada MVP, hindari penggunaan state management yang terlalu kompleks.
-
----
-
-# 20. Routing Architecture
-
-Contoh:
+TanStack Query digunakan untuk:
 
 ```text
-/
-├── /
-├── /login
-├── /register
-│
-├── /dashboard
-├── /materials
-├── /materials/:slug
-├── /practice
-├── /simulation
-├── /simulation/:id
-├── /bookmarks
-└── /progress
-```
-
-Admin:
-
-```text
-/admin
-├── /dashboard
-├── /materials
-├── /questions
-├── /categories
-├── /exam-packages
-├── /users
-└── /imports
+Fetching
+Caching
+Mutation
+Loading State
+Error State
+Refetching
 ```
 
 ---
 
-# 21. Route Protection
-
-Route dibagi menjadi:
+# 15. Data Flow
 
 ```text
-Public Route
-Protected Route
-Admin Route
-```
-
-## Public Route
-
-Dapat diakses tanpa login.
-
-## Protected Route
-
-Membutuhkan login.
-
-## Admin Route
-
-Membutuhkan role tertentu.
-
----
-
-# 22. Route Protection Flow
-
-```text
-User Request
-      ↓
-Authenticated?
-      │
-   No ─┴─ Yes
-   ↓       ↓
-Login   Check Role
-            │
-       Authorized?
-          │
-       No ┴ Yes
-       ↓     ↓
-   Forbidden  Page
-```
-
----
-
-# 23. TypeScript Strategy
-
-Semua data penting harus memiliki type.
-
-Contoh:
-
-```typescript
-export interface Material {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string | null;
-  categoryId: string;
-  status: "draft" | "published" | "archived";
-}
-```
-
-Hindari:
-
-```typescript
-const data: any = {};
-```
-
-Gunakan `any` seminimal mungkin.
-
----
-
-# 24. Types Organization
-
-Types dapat disimpan berdasarkan domain.
-
-```text
-types/
-├── auth.ts
-├── material.ts
-├── question.ts
-├── practice.ts
-├── exam.ts
-└── user.ts
-```
-
----
-
-# 25. Constants
-
-Konstanta disimpan di:
-
-```text
-src/lib/constants.ts
-```
-
-Contoh:
-
-```typescript
-export const APP_NAME = "CPNS Master";
-
-export const ROUTES = {
-  HOME: "/",
-  LOGIN: "/login",
-  DASHBOARD: "/dashboard",
-};
-```
-
----
-
-# 26. Environment Variables
-
-File:
-
-```text
-.env.local
-```
-
-Contoh:
-
-```text
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-```
-
-File:
-
-```text
-.env.example
-```
-
-harus disimpan di GitHub.
-
-File:
-
-```text
-.env.local
-```
-
-tidak boleh di-commit.
-
----
-
-# 27. Supabase Client
-
-Lokasi:
-
-```text
-src/lib/supabase.ts
-```
-
-Tanggung jawab:
-
-- Membuat Supabase client.
-- Menggunakan environment variables.
-- Menjadi satu sumber koneksi.
-
----
-
-# 28. Import Convention
-
-Urutan import:
-
-```text
-1. React
-2. External Libraries
-3. Internal Components
-4. Features
-5. Services
-6. Types
-7. Utils
-```
-
-Contoh:
-
-```typescript
-import { useState } from "react";
-
-import { Button } from "@/components/ui/Button";
-
-import { useMaterials } from "@/features/materials";
-
-import type { Material } from "@/types/material";
-```
-
----
-
-# 29. Naming Convention
-
-## Components
-
-```text
-PascalCase.tsx
-```
-
-Contoh:
-
-```text
-MaterialCard.tsx
-```
-
-## Hooks
-
-```text
-useCamelCase.ts
-```
-
-Contoh:
-
-```text
-useMaterials.ts
-```
-
-## Services
-
-```text
-domain.service.ts
-```
-
-Contoh:
-
-```text
-material.service.ts
-```
-
-## Utilities
-
-```text
-camelCase.ts
-```
-
----
-
-# 30. Component Rules
-
-Component harus:
-
-- Memiliki satu tanggung jawab utama.
-- Tidak terlalu besar.
-- Reusable bila memungkinkan.
-- Memiliki props yang jelas.
-- Menggunakan TypeScript.
-
-Jika komponen terlalu besar:
-
-```text
-Split Component
-```
-
----
-
-# 31. Data Fetching Flow
-
-```text
-Page
-   ↓
-Feature Hook
-   ↓
+User Interaction
+        ↓
+Component
+        ↓
+Hook
+        ↓
 Service
-   ↓
+        ↓
 Supabase
-   ↓
+        ↓
 Database
 ```
 
@@ -918,360 +667,328 @@ Response:
 
 ```text
 Database
-   ↓
+        ↓
 Supabase
-   ↓
+        ↓
 Service
-   ↓
+        ↓
 Hook
-   ↓
+        ↓
 Component
+        ↓
+UI
 ```
 
 ---
 
-# 32. Error Handling
-
-Error harus ditangani pada beberapa level:
-
-```text
-Database Error
-      ↓
-Service
-      ↓
-Hook
-      ↓
-UI Error State
-```
-
-Pengguna tidak perlu melihat error teknis mentah.
-
----
-
-# 33. Loading Handling
-
-Setiap proses async harus memiliki:
-
-```text
-Loading
-Success
-Error
-Empty
-```
-
-Contoh:
-
-```text
-Loading
-   ↓
-Success
-   │
-   ├── Data
-   └── Empty
-   ↓
-Error
-```
-
----
-
-# 34. Admin Architecture
-
-Admin CMS memiliki layout terpisah:
-
-```text
-AdminLayout
-      ↓
-AdminSidebar
-      ↓
-AdminPage
-      ↓
-AdminFeature
-```
-
-Contoh:
-
-```text
-Admin Question Management
-      ↓
-Question Table
-      ↓
-Question Form
-      ↓
-Question Service
-      ↓
-Supabase
-```
-
----
-
-# 35. Import Architecture
-
-Alur import Excel:
-
-```text
-Upload File
-      ↓
-Validate File
-      ↓
-Parse Excel
-      ↓
-Preview Data
-      ↓
-Validate Rows
-      ↓
-Show Errors
-      ↓
-Confirm Import
-      ↓
-Insert Database
-```
-
-Import harus menggunakan proses yang aman dan dapat menampilkan error per baris.
-
----
-
-# 36. Git Workflow
-
-Branch utama:
-
-```text
-main
-```
-
-Feature branch:
-
-```text
-feature/auth
-feature/materials
-feature/questions
-feature/admin
-```
-
-Bug fix:
-
-```text
-fix/login-error
-fix/question-validation
-```
-
----
-
-# 37. Commit Convention
-
-Gunakan format:
-
-```text
-type: description
-```
-
-Contoh:
-
-```text
-feat: add authentication
-fix: resolve material loading error
-docs: update database design
-refactor: simplify question service
-style: update button component
-chore: update dependencies
-```
-
----
-
-# 38. Development Workflow
-
-```text
-1. Read PRD
-      ↓
-2. Read Design System
-      ↓
-3. Read Database Design
-      ↓
-4. Plan Feature
-      ↓
-5. Create Types
-      ↓
-6. Create Service
-      ↓
-7. Create Hook
-      ↓
-8. Create Components
-      ↓
-9. Create Page
-      ↓
-10. Test
-      ↓
-11. Commit
-```
-
----
-
-# 39. Testing Strategy
-
-Testing dapat dikembangkan secara bertahap.
-
-Prioritas:
-
-1. Manual testing.
-2. TypeScript checking.
-3. Linting.
-4. Unit testing.
-5. Integration testing.
-6. End-to-end testing.
-
----
-
-# 40. Performance Principles
-
-Aplikasi harus:
-
-- Menghindari request berulang.
-- Menggunakan pagination.
-- Menggunakan lazy loading bila diperlukan.
-- Mengoptimalkan gambar.
-- Menghindari render yang tidak perlu.
-
----
-
-# 41. Scalability Strategy
-
-Ketika aplikasi berkembang:
-
-```text
-MVP
- ↓
-Feature Modules
- ↓
-Reusable Components
- ↓
-Service Layer
- ↓
-Optimized Queries
- ↓
-Caching
-```
-
-Jangan melakukan optimasi kompleks sebelum benar-benar dibutuhkan.
-
----
-
-# 42. Security Architecture
-
-Security harus diterapkan pada:
+# 16. Database Domain Architecture
 
 ```text
 Authentication
-      ↓
-Authorization
-      ↓
-RLS
-      ↓
-Input Validation
-      ↓
-Database Constraints
+    ↓
+profiles
 ```
 
-Frontend tidak boleh menjadi satu-satunya lapisan keamanan.
+```text
+Content
+    ↓
+exam_categories
+    ↓
+subjects
+    ↓
+materials
+    ↓
+questions
+    ↓
+question_options
+```
+
+```text
+Learning
+    ↓
+question_attempts
+    ↓
+simulations
+    ↓
+simulation_answers
+    ↓
+user_progress
+```
+
+```text
+Administration
+    ↓
+audit_logs
+```
 
 ---
 
-# 43. Recommended Aliases
-
-Gunakan alias:
+# 17. Role-Based Feature Architecture
 
 ```text
-@
+USER
+│
+├── Dashboard
+├── Learning
+├── Practice
+├── Simulation
+├── Progress
+└── Profile
 ```
 
-untuk:
+```text
+ADMIN
+│
+├── Dashboard
+├── Materials
+├── Questions
+├── Categories
+└── Import
+```
 
 ```text
-src/
+SUPER ADMIN
+│
+├── Dashboard
+├── User Management
+├── Admin Management
+├── Audit Logs
+└── System Settings
+```
+
+---
+
+# 18. SKD and SKB Architecture
+
+Content tidak dibuat hardcoded berdasarkan formasi.
+
+```text
+Exam Category
+    ↓
+Subject
+    ↓
+Material
+    ↓
+Question
 ```
 
 Contoh:
 
-```typescript
-import { Button } from "@/components/ui/Button";
+```text
+SKD
+├── TWK
+├── TIU
+└── TKP
 ```
 
-Daripada:
+```text
+SKB
+└── Pranata Komputer
+```
 
-```typescript
-import { Button } from "../../../components/ui/Button";
+Di masa depan:
+
+```text
+SKB
+├── Pranata Komputer
+├── Guru
+├── Analis Hukum
+└── Formasi Lainnya
 ```
 
 ---
 
-# 44. Architecture Decision
+# 19. Naming Conventions
 
-CPNS Master menggunakan:
+## Components
 
 ```text
+PascalCase
+
+QuestionCard.tsx
+DashboardPage.tsx
+UserTable.tsx
+```
+
+## Hooks
+
+```text
+camelCase dengan prefix use
+
+useAuth.ts
+useQuestions.ts
+useMyProfile.ts
+```
+
+## Services
+
+```text
+camelCase + Service
+
+authService.ts
+questionService.ts
+profileService.ts
+```
+
+## Types
+
+```text
+camelCase
+
+question.ts
+profile.ts
+database.ts
+```
+
+---
+
+# 20. Dependency Rules
+
+Dependency flow:
+
+```text
+Pages
+    ↓
+Features
+    ↓
+Hooks
+    ↓
+Services
+    ↓
+Lib
+```
+
+Shared components:
+
+```text
+Components
+    ↓
+Tidak bergantung pada Feature tertentu
+```
+
+Service:
+
+```text
+Services
+    ↓
+Tidak mengatur UI
+```
+
+Pages:
+
+```text
+Pages
+    ↓
+Tidak langsung mengandung query database kompleks
+```
+
+---
+
+# 21. Scalability Principles
+
+Arsitektur harus dapat mendukung:
+
+```text
+10 users
+    ↓
+1.000 users
+    ↓
+10.000 users
+    ↓
+100.000 users
+```
+
+Dengan penambahan:
+
+```text
+Caching
+Pagination
+Lazy Loading
+Code Splitting
+Database Indexing
+Query Optimization
+```
+
+---
+
+# 22. Final Architecture
+
+```text
+┌────────────────────────────┐
+│           User             │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│        React App           │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│       AuthContext          │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│    Profile + Role Status   │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│       Route Guard          │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│          Layout            │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│          Feature           │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│           Hook             │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│          Service           │
+└─────────────┬──────────────┘
+              │
+              ▼
+┌────────────────────────────┐
+│      Supabase + RLS        │
+└────────────────────────────┘
+```
+
+---
+
+# 23. Architecture Principles
+
+CPNS Master menggunakan prinsip:
+
+```text
+Separation of Concerns
 Feature-Based Architecture
-+
-Reusable Component System
-+
-Service Layer
-+
-TypeScript
-+
-Supabase
+Reusable Components
+Secure Authorization
+Scalable Database Access
+Type Safety
 ```
 
-Tujuan:
-
-> Setiap bagian aplikasi memiliki tempat yang jelas dan tanggung jawab yang jelas.
-
----
-
-# 45. Final Folder Structure
+Tujuan akhir:
 
 ```text
-cpns-master/
-│
-├── docs/
-│
-├── public/
-│
-├── src/
-│   ├── app/
-│   ├── assets/
-│   ├── components/
-│   ├── features/
-│   ├── hooks/
-│   ├── layouts/
-│   ├── lib/
-│   ├── pages/
-│   ├── services/
-│   ├── stores/
-│   ├── types/
-│   └── utils/
-│
-├── supabase/
-│   ├── migrations/
-│   ├── seed/
-│   └── functions/
-│
-├── .env.example
-├── package.json
-├── tailwind.config.ts
-├── tsconfig.json
-├── vite.config.ts
-└── README.md
+Mudah dikembangkan
+Mudah dirawat
+Mudah dipahami
+Aman
+Scalable
 ```
 
 ---
 
-# Final Architecture Statement
-
-> CPNS Master akan dibangun dengan arsitektur modular, feature-based, type-safe, dan scalable.
-
-> Setiap fitur memiliki tanggung jawab yang jelas.
-
-> Setiap komponen yang dapat digunakan kembali akan dibuat reusable.
-
-> Setiap komunikasi dengan database akan melalui service layer.
-
-> Security akan diterapkan pada database dan backend service, bukan hanya pada frontend.
-
-> Dengan fondasi ini, CPNS Master dapat berkembang dari MVP sederhana menjadi platform pembelajaran CPNS yang lebih besar tanpa harus melakukan rewrite total terhadap aplikasi.
+## End of Document
